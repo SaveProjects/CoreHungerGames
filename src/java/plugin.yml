@@ -1,0 +1,7 @@
+name: Core_HungerGames
+version: 0.1
+author: EdmineCoreTeam
+main: fr.edminecoreteam.hungergames.Core
+commands:
+  game:
+    description: Game Manager
