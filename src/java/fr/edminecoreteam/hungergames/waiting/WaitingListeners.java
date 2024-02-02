@@ -1,10 +1,9 @@
 package fr.edminecoreteam.hungergames.waiting;
 
-import fr.edminecoreteam.sheepwars.Core;
-import fr.edminecoreteam.sheepwars.State;
-import fr.edminecoreteam.sheepwars.utils.game.GameUtils;
-import fr.edminecoreteam.sheepwars.waiting.guis.ChooseTeam;
-import fr.edminecoreteam.sheepwars.waiting.items.ItemsWaiting;
+import fr.edminecoreteam.hungergames.Core;
+import fr.edminecoreteam.hungergames.State;
+import fr.edminecoreteam.hungergames.utils.game.GameUtils;
+import fr.edminecoreteam.hungergames.waiting.items.ItemsWaiting;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
@@ -43,25 +42,6 @@ public class WaitingListeners implements Listener
     }
 
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent e)
-    {
-        if (e.getCurrentItem() == null) { return; }
-
-        Player p = (Player)e.getWhoClicked();
-        ItemStack it = e.getCurrentItem();
-        if (it.getType() == Material.BANNER)
-        {
-            if (core.isState(State.WAITING) || core.isState(State.STARTING) || core.isState(State.FINISH))
-            {
-                e.setCancelled(true);
-                ChooseTeam teamGui = new ChooseTeam();
-                teamGui.gui(p);
-                p.playSound(p.getLocation(), Sound.CLICK, 1.0f, 1.0f);
-            }
-        }
-    }
-
-    @EventHandler
     public void onInteract(PlayerInteractEvent e)
     {
         if (e.getItem() == null) { return; }
@@ -69,15 +49,10 @@ public class WaitingListeners implements Listener
         Player p = e.getPlayer();
         Action a = e.getAction();
         ItemStack it = e.getItem();
-        if (it.getType() == Material.BANNER && (a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK || a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK))
+        if (it.getType() == Material.BED && (a == Action.RIGHT_CLICK_AIR || a == Action.RIGHT_CLICK_BLOCK || a == Action.LEFT_CLICK_AIR || a == Action.LEFT_CLICK_BLOCK))
         {
-            if (core.isState(State.WAITING) || core.isState(State.STARTING) || core.isState(State.FINISH))
-            {
-                e.setCancelled(true);
-                ChooseTeam teamGui = new ChooseTeam();
-                teamGui.gui(p);
-                p.playSound(p.getLocation(), Sound.CLICK, 1.0f, 1.0f);
-            }
+            e.setCancelled(true);
+            p.playSound(p.getLocation(), Sound.CLICK, 1.0f, 1.0f);
         }
     }
 

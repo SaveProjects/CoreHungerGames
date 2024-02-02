@@ -1,5 +1,8 @@
 package fr.edminecoreteam.hungergames;
 
+import fr.edminecoreteam.hungergames.game.GameListeners;
+import fr.edminecoreteam.hungergames.listeners.connection.JoinEvent;
+import fr.edminecoreteam.hungergames.listeners.connection.LeaveEvent;
 import fr.edminecoreteam.hungergames.utils.game.SpawnListeners;
 import fr.edminecoreteam.hungergames.utils.minecraft.BossBar;
 import fr.edminecoreteam.hungergames.utils.minecraft.TitleBuilder;
@@ -8,7 +11,9 @@ import fr.edminecoreteam.hungergames.utils.scoreboards.LeaveScoreboardEvent;
 import fr.edminecoreteam.hungergames.utils.scoreboards.ScoreboardManager;
 import fr.edminecoreteam.hungergames.utils.scoreboards.WorldChangeScoreboardEvent;
 import fr.edminecoreteam.hungergames.utils.world.LoadWorld;
+import fr.edminecoreteam.hungergames.waiting.WaitingListeners;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -28,6 +33,7 @@ public class Core extends JavaPlugin
     public void timers(int i) { this.timers = i; }
     private int maxplayers;
     private List<String> playersInGame;
+    private List<Player> playersToSpawn;
     public boolean isForceStart = false;
     private SpawnListeners spawnListeners;
     private BossBar bossBar;
@@ -62,10 +68,21 @@ public class Core extends JavaPlugin
 
     private void loadListeners()
     {
+        this.spawnListeners = new SpawnListeners();
         this.playersInGame = new ArrayList<String>();
+        this.playersToSpawn = new ArrayList<Player>();
         this.title = new TitleBuilder();
-        this.bossBar = new BossBar(this, "HungerGames");
-        this.maxplayers = 0;
+        this.bossBar = new BossBar(this, "§8● §6§lHungerGames §8●");
+        for (String s : this.getConfig().getConfigurationSection("maps." + this.world + ".spawns").getKeys(false))
+        {
+            ++this.maxplayers;
+        }
+
+        Bukkit.getPluginManager().registerEvents(new JoinEvent(), this);
+        Bukkit.getPluginManager().registerEvents(new LeaveEvent(), this);
+
+        Bukkit.getPluginManager().registerEvents(new WaitingListeners(), this);
+        Bukkit.getPluginManager().registerEvents(new GameListeners(), this);
     }
 
     private void loadGameWorld()
@@ -99,6 +116,7 @@ public class Core extends JavaPlugin
     }
     public SpawnListeners spawnListeners() { return this.spawnListeners; }
     public List<String> getPlayersInGame() { return this.playersInGame; }
+    public List<Player> getPlayersToSpawn() { return this.playersToSpawn; }
     public BossBar getBossBar() { return this.bossBar; }
     public TitleBuilder titleBuilder() { return this.title; }
     public int getMaxplayers() { return this.maxplayers; }

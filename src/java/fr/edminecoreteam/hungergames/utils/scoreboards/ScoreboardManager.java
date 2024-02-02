@@ -1,6 +1,6 @@
 package fr.edminecoreteam.hungergames.utils.scoreboards;
 
-import fr.edminecoreteam.sheepwars.Core;
+import fr.edminecoreteam.hungergames.Core;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

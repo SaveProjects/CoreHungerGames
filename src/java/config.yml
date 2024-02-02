@@ -15,7 +15,12 @@ mysql:
 type: 'ranked'
 
 # Nombre de joueurs demandés pour lancer.
-needtostart: 10
+needtostart: 2
+
+# Gestion des coffres
+chests:
+  number: 100
+  radius: 220
 
 # Définir les timers du jeu.
 timers:
@@ -33,3 +38,42 @@ spawn:
   z: 0.5
   f: -90.5
   t: -4.0
+
+# Gestion des cartes. (Nombre de spawns = nombre de joueurs)
+maps:
+  Station:
+    spec:
+      x: 0.5
+      y: 67.0
+      z: -1.5
+      f: 0.0
+      t: 90.0
+    center:
+      x: 0.5
+      y: 66.0
+      z: -0.5
+    spawns:
+      spawn1:
+        x: 3.5
+        y: 62.0
+        z: 19.5
+        f: 70.0
+        t: 0.0
+      spawn2:
+        x: 8.5
+        y: 62.0
+        z: 18.5
+        f: 157.0
+        t: 0.0
+      spawn3:
+        x: 12.5
+        y: 62.0
+        z: 15.5
+        f: 143.0
+        t: 0.0
+      spawn4:
+        x: 16.5
+        y: 62.0
+        z: 11.5
+        f: 126.0
+        t: 0.0

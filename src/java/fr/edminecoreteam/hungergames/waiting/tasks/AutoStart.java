@@ -2,6 +2,7 @@ package fr.edminecoreteam.hungergames.waiting.tasks;
 
 import fr.edminecoreteam.hungergames.Core;
 import fr.edminecoreteam.hungergames.State;
+import fr.edminecoreteam.hungergames.game.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -22,6 +23,8 @@ public class AutoStart extends BukkitRunnable
     public void run()
     {
         core.timers(timer);
+        for (Player pls : core.getServer().getOnlinePlayers()) { pls.setLevel(timer); }
+        core.getBossBar().setTitle("§fLancement: §a" + timer + "§as");
 
         if (core.getConfig().getString("type").equalsIgnoreCase("ranked"))
         {
@@ -33,6 +36,7 @@ public class AutoStart extends BukkitRunnable
                     pls.sendTitle("", "");
                 }
                 Bukkit.broadcastMessage("§cErreur de lancement, il manque des joueurs...");
+                core.getBossBar().setTitle("§8● §6§lHungerGames §8●");
                 core.setState(State.WAITING);
                 cancel();
             }
@@ -54,6 +58,7 @@ public class AutoStart extends BukkitRunnable
                     pls.sendTitle("", "");
                 }
                 Bukkit.broadcastMessage("§cErreur de lancement, il manque des joueurs...");
+                core.getBossBar().setTitle("§8● §6§lHungerGames §8●");
                 core.setState(State.WAITING);
                 cancel();
             }
@@ -67,8 +72,7 @@ public class AutoStart extends BukkitRunnable
         }
 
         for (Player pls : core.getServer().getOnlinePlayers()) {
-            pls.setLevel(timer);
-            if (timer != 5 && timer != 4 && timer != 3 && timer != 2 && timer != 1) {
+            if (timer <= 20 && timer != 5 && timer != 4 && timer != 3 && timer != 2 && timer != 1) {
                 pls.playSound(pls.getLocation(), Sound.NOTE_STICKS, 1.0f, 1.0f);
             }
         }
@@ -125,6 +129,8 @@ public class AutoStart extends BukkitRunnable
                 System.out.println(pls);
             }
             core.setState(State.PREPARATION);
+            Game game = new Game();
+            game.preparation();
             cancel();
         }
         --timer;

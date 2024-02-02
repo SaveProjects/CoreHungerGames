@@ -16,8 +16,6 @@ public class ItemsWaiting
 
     public void get()
     {
-        clearinv();
-
         ItemStack leave = new ItemStack(Material.BED, 1);
         ItemMeta leaveM = leave.getItemMeta();
         leaveM.setDisplayName("§c§lQuitter §7• Clique");
@@ -25,7 +23,7 @@ public class ItemsWaiting
         p.getInventory().setItem(8, leave);
     }
 
-    private void clearinv()
+    public void clearinv()
     {
         p.getInventory().clear();
     }

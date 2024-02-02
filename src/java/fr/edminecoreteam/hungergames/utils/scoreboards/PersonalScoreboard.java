@@ -3,6 +3,7 @@ package fr.edminecoreteam.hungergames.utils.scoreboards;
 import fr.edminecoreteam.hungergames.Core;
 import fr.edminecoreteam.hungergames.Core;
 import fr.edminecoreteam.hungergames.State;
+import fr.edminecoreteam.hungergames.utils.game.GameUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -30,6 +31,7 @@ public class PersonalScoreboard {
     private final Player player;
     private final UUID uuid;
     private final ObjectiveSign objectiveSign;
+    private final GameUtils gameUtils = new GameUtils();
  
     PersonalScoreboard(Player player){
         this.player = player;
@@ -54,7 +56,7 @@ public class PersonalScoreboard {
                     objectiveSign.setLine(2, "  §8• §7Statut: §fAttente...");
 
                     objectiveSign.setLine(7, "§2");
-                    objectiveSign.setLine(8, "  §8• §7Carte: §e" + core.world);
+                    objectiveSign.setLine(8, "  §8• §7Carte: §9" + core.world);
                     objectiveSign.setLine(9, "§3");
                     objectiveSign.setLine(10, " §8➡ " + ip);
                 }
@@ -64,7 +66,7 @@ public class PersonalScoreboard {
 
                     objectiveSign.setLine(6, "§2");
                     objectiveSign.setLine(7, "  §8• §7Début dans: §a" + core.timers + "§as");
-                    objectiveSign.setLine(8, "  §8• §7Carte: §e"+ core.world);
+                    objectiveSign.setLine(8, "  §8• §7Carte: §9"+ core.world);
                     objectiveSign.setLine(9, "§3");
                     objectiveSign.setLine(10, " §8➡ " + ip);
                 }
@@ -76,12 +78,37 @@ public class PersonalScoreboard {
                 }
                 else if (core.getConfig().getString("type").equalsIgnoreCase("unranked"))
                 {
-                    objectiveSign.setLine(5, "  §8• §7Mode: §eNon-Compétitif");
+                    objectiveSign.setLine(5, "  §8• §7Mode: §fNormal");
                 }
     		}
-            if (core.isState(State.INGAME) || core.isState(State.PREPARATION) || core.isState(State.FINISH))
+            if (core.isState(State.INGAME) || core.isState(State.PREPARATION) || core.isState(State.NOPVP) || core.isState(State.FINISH))
             {
+                objectiveSign.setLine(2, "  §8• §7Joueurs restant: §a" + core.getPlayersInGame().size());
+                if (core.isState(State.PREPARATION))
+                {
+                    objectiveSign.setLine(2, "  §8• §7Début dans: §a" + core.timers + "§as");
+                }
+                if (core.isState(State.NOPVP))
+                {
+                    objectiveSign.setLine(2, "  §8• §7PVP actif dans: §c" + core.timers + "§cs");
+                }
+                if (core.isState(State.INGAME))
+                {
+                    objectiveSign.setLine(2, "  §8• §7Temps restant: §b" + gameUtils.convertTime(core.timers));
+                }
 
+                objectiveSign.setLine(3, "§6");
+                if (core.getConfig().getString("type").equalsIgnoreCase("ranked"))
+                {
+                    objectiveSign.setLine(4, "  §8• §7Mode: §6Compétitif");
+                }
+                else if (core.getConfig().getString("type").equalsIgnoreCase("unranked"))
+                {
+                    objectiveSign.setLine(4, "  §8• §7Mode: §fNormal");
+                }
+                objectiveSign.setLine(5, "  §8• §7Carte: §9"+ core.world);
+                objectiveSign.setLine(6, "§3");
+                objectiveSign.setLine(7, " §8➡ " + ip);
             }
  
         objectiveSign.updateLines();

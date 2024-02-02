@@ -36,6 +36,8 @@ public class JoinEvent implements Listener
             if (!core.getPlayersInGame().contains(p.getName()))
             {
                 core.getPlayersInGame().add(p.getName());
+                core.getPlayersToSpawn().add(p);
+                core.getBossBar().addPlayer(p);
                 core.getServer().broadcastMessage("§e" + p.getName() + "§7 a rejoint le jeu. §d" + core.getServer().getOnlinePlayers().size() + "§d/" + core.getMaxplayers());
 
                 p.teleport(gameUtils.getSpawn());
@@ -64,7 +66,7 @@ public class JoinEvent implements Listener
         }
         if (core.isState(State.INGAME) || core.isState(State.PREPARATION) || core.isState(State.NOPVP))
         {
-
+            core.getBossBar().addPlayer(p);
         }
     }
 
@@ -91,7 +93,7 @@ public class JoinEvent implements Listener
         }
         if (core.getConfig().getString("type").equalsIgnoreCase("unranked"))
         {
-            p.sendTitle("§e§lHungerGames", "§7Mode §6Non-Compétitif§8.");
+            p.sendTitle("§e§lHungerGames", "§7Mode §fNormal§8.");
         }
     }
 }
