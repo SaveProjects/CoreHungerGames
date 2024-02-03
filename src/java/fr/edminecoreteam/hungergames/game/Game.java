@@ -31,8 +31,6 @@ public class Game
                 core.getPlayersToSpawn().remove(p);
             }
         }
-        gameUtils.placeChestsAroundLocation(gameUtils.getCenter(), 15, core.getConfig().getInt("chest.radius"), core.getConfig().getInt("chest.number"));
-        gameUtils.fillChestsRandomly(gameUtils.getCenter());
 
         Preparation task = new Preparation(core);
         task.runTaskTimer((Plugin) core, 0L, 20L);

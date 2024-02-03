@@ -3,6 +3,7 @@ package fr.edminecoreteam.hungergames.game.tasks;
 import fr.edminecoreteam.hungergames.Core;
 import fr.edminecoreteam.hungergames.State;
 import fr.edminecoreteam.hungergames.game.Game;
+import fr.edminecoreteam.hungergames.utils.game.GameUtils;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -10,8 +11,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class Preparation extends BukkitRunnable
 {
     public int timer;
-
     private final Core core;
+    private final GameUtils gameUtils = new GameUtils();
 
     public Preparation(Core core)
     {
@@ -25,6 +26,7 @@ public class Preparation extends BukkitRunnable
         core.timers(timer);
         for (Player pls : core.getServer().getOnlinePlayers()) { pls.setLevel(timer); }
         core.getBossBar().setTitle("§fPréparation: §e" + timer + "§es");
+        core.getBossBar().setHealth(timer, core.getConfig().getInt("timers.preparation"));
         for (Player pls : core.getServer().getOnlinePlayers()) {
             if (timer <= 15 && timer != 5 && timer != 4 && timer != 3 && timer != 2 && timer != 1) {
                 pls.playSound(pls.getLocation(), Sound.NOTE_STICKS, 1.0f, 1.0f);

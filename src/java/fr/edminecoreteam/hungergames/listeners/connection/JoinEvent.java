@@ -37,7 +37,7 @@ public class JoinEvent implements Listener
             {
                 core.getPlayersInGame().add(p.getName());
                 core.getPlayersToSpawn().add(p);
-                core.getBossBar().addPlayer(p);
+                core.getBossBar().putPlayer(p);
                 core.getServer().broadcastMessage("§e" + p.getName() + "§7 a rejoint le jeu. §d" + core.getServer().getOnlinePlayers().size() + "§d/" + core.getMaxplayers());
 
                 p.teleport(gameUtils.getSpawn());
@@ -66,7 +66,7 @@ public class JoinEvent implements Listener
         }
         if (core.isState(State.INGAME) || core.isState(State.PREPARATION) || core.isState(State.NOPVP))
         {
-            core.getBossBar().addPlayer(p);
+            core.getBossBar().putPlayer(p);
         }
     }
 

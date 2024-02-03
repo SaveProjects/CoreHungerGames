@@ -3,6 +3,7 @@ package fr.edminecoreteam.hungergames.waiting.tasks;
 import fr.edminecoreteam.hungergames.Core;
 import fr.edminecoreteam.hungergames.State;
 import fr.edminecoreteam.hungergames.game.Game;
+import fr.edminecoreteam.hungergames.utils.game.GameUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -11,8 +12,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class AutoStart extends BukkitRunnable
 {
     public int timer;
-
-    private Core core;
+    private final Core core;
+    private final GameUtils gameUtils = new GameUtils();
 
     public AutoStart(Core core)
     {
@@ -25,6 +26,7 @@ public class AutoStart extends BukkitRunnable
         core.timers(timer);
         for (Player pls : core.getServer().getOnlinePlayers()) { pls.setLevel(timer); }
         core.getBossBar().setTitle("§fLancement: §a" + timer + "§as");
+        core.getBossBar().setHealth(timer, core.getConfig().getInt("timers.start"));
 
         if (core.getConfig().getString("type").equalsIgnoreCase("ranked"))
         {

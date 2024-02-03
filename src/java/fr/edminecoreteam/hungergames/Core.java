@@ -1,11 +1,15 @@
 package fr.edminecoreteam.hungergames;
 
 import fr.edminecoreteam.hungergames.game.GameListeners;
+import fr.edminecoreteam.hungergames.game.chests.RandomSpawnChests;
+import fr.edminecoreteam.hungergames.game.chests.RefillChest;
 import fr.edminecoreteam.hungergames.listeners.connection.JoinEvent;
 import fr.edminecoreteam.hungergames.listeners.connection.LeaveEvent;
+import fr.edminecoreteam.hungergames.utils.game.GameUtils;
 import fr.edminecoreteam.hungergames.utils.game.SpawnListeners;
-import fr.edminecoreteam.hungergames.utils.minecraft.BossBar;
 import fr.edminecoreteam.hungergames.utils.minecraft.TitleBuilder;
+import fr.edminecoreteam.hungergames.utils.minecraft.edbossbar.BossBar;
+import fr.edminecoreteam.hungergames.utils.minecraft.edbossbar.BossBarEvent;
 import fr.edminecoreteam.hungergames.utils.scoreboards.JoinScoreboardEvent;
 import fr.edminecoreteam.hungergames.utils.scoreboards.LeaveScoreboardEvent;
 import fr.edminecoreteam.hungergames.utils.scoreboards.ScoreboardManager;
@@ -72,7 +76,8 @@ public class Core extends JavaPlugin
         this.playersInGame = new ArrayList<String>();
         this.playersToSpawn = new ArrayList<Player>();
         this.title = new TitleBuilder();
-        this.bossBar = new BossBar(this, "§8● §6§lHungerGames §8●");
+        this.bossBar = new BossBar("§8● §6§lHungerGames §8●", 300);
+        Bukkit.getPluginManager().registerEvents(new BossBarEvent(), this);
         for (String s : this.getConfig().getConfigurationSection("maps." + this.world + ".spawns").getKeys(false))
         {
             ++this.maxplayers;
@@ -90,6 +95,18 @@ public class Core extends JavaPlugin
         String world = LoadWorld.getRandomSubfolderName("gameTemplate/");
         LoadWorld.createGameWorld(world);
         this.world = world;
+
+        System.out.println("Generating CHEST Location...");
+        RandomSpawnChests randomSpawnChests = new RandomSpawnChests();
+        RefillChest refillChest = new RefillChest();
+        GameUtils gameUtils = new GameUtils();
+        randomSpawnChests.placeChestsAroundLocation(
+                gameUtils.getCenter(),
+                5,
+                this.getConfig().getInt("chests.radius"),
+                this.getConfig().getInt("chests.number"));
+        refillChest.fillAllChestsRandomly();
+        System.out.println("All CHEST are ready !");
     }
 
     private void ScoreboardManager()

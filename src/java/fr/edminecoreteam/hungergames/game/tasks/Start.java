@@ -11,7 +11,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class Start extends BukkitRunnable
 {
     public int timer;
-
     private final Core core;
     private final GameUtils gameUtils = new GameUtils();
 
@@ -25,8 +24,8 @@ public class Start extends BukkitRunnable
     {
         if (!core.isState(State.INGAME)) { cancel(); }
         core.timers(timer);
-        for (Player pls : core.getServer().getOnlinePlayers()) { pls.setLevel(timer); }
         core.getBossBar().setTitle("§fTemps restant: §b" + gameUtils.convertTime(timer));
+        core.getBossBar().setHealth(timer, core.getConfig().getInt("timers.game"));
         for (Player pls : core.getServer().getOnlinePlayers()) {
             if (timer <= 15 && timer != 5 && timer != 4 && timer != 3 && timer != 2 && timer != 1) {
                 pls.playSound(pls.getLocation(), Sound.NOTE_STICKS, 1.0f, 1.0f);
