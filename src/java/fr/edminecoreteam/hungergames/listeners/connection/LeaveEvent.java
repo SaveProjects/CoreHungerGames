@@ -22,7 +22,6 @@ public class LeaveEvent implements Listener
             {
                 core.getPlayersInGame().remove(p.getName());
                 core.getPlayersToSpawn().remove(p);
-                core.getBossBar().removePlayer(p);
                 int finalcount = core.getServer().getOnlinePlayers().size() - 1;
                 core.getServer().broadcastMessage("§e" + p.getName() + "§7 a quitté le jeu. §d" + finalcount + "§d/" + core.getMaxplayers());
             }
@@ -33,14 +32,13 @@ public class LeaveEvent implements Listener
             {
                 core.getPlayersInGame().remove(p.getName());
                 core.getPlayersToSpawn().remove(p);
-                core.getBossBar().removePlayer(p);
                 int finalcount = core.getServer().getOnlinePlayers().size() - 1;
                 core.getServer().broadcastMessage("§e" + p.getName() + "§7 a quitté le jeu. §d" + finalcount + "§d/" + core.getMaxplayers());
             }
         }
         if (core.isState(State.INGAME) || core.isState(State.PREPARATION) || core.isState(State.NOPVP))
         {
-            core.getBossBar().removePlayer(p);
+
         }
     }
 }

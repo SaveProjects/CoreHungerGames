@@ -110,7 +110,7 @@ public class RefillChest
 
         rareItems.add(new ItemStack(Material.GOLD_INGOT));
         rareItems.add(new ItemStack(Material.IRON_INGOT));
-        rareItems.add(new ItemStack(Material.LAPIS_ORE));
+        rareItems.add(new ItemStack(Material.INK_SACK, 1, (short) 4));
 
         rareItems.add(new ItemStack(Material.BREAD, 6));
         rareItems.add(new ItemStack(Material.COOKED_BEEF, 6));

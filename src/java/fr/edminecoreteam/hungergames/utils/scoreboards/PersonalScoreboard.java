@@ -86,29 +86,29 @@ public class PersonalScoreboard {
                 objectiveSign.setLine(2, "  §8• §7Joueurs restant: §a" + core.getPlayersInGame().size());
                 if (core.isState(State.PREPARATION))
                 {
-                    objectiveSign.setLine(2, "  §8• §7Début dans: §a" + core.timers + "§as");
+                    objectiveSign.setLine(3, "  §8• §7Début dans: §a" + core.timers + "§as");
                 }
                 if (core.isState(State.NOPVP))
                 {
-                    objectiveSign.setLine(2, "  §8• §7PVP actif dans: §c" + core.timers + "§cs");
+                    objectiveSign.setLine(3, "  §8• §7PVP actif dans: §c" + core.timers + "§cs");
                 }
                 if (core.isState(State.INGAME))
                 {
-                    objectiveSign.setLine(2, "  §8• §7Temps restant: §b" + gameUtils.convertTime(core.timers));
+                    objectiveSign.setLine(3, "  §8• §7Temps restant: §b" + gameUtils.convertTime(core.timers));
                 }
 
-                objectiveSign.setLine(3, "§6");
+                objectiveSign.setLine(4, "§6");
                 if (core.getConfig().getString("type").equalsIgnoreCase("ranked"))
                 {
-                    objectiveSign.setLine(4, "  §8• §7Mode: §6Compétitif");
+                    objectiveSign.setLine(5, "  §8• §7Mode: §6Compétitif");
                 }
                 else if (core.getConfig().getString("type").equalsIgnoreCase("unranked"))
                 {
-                    objectiveSign.setLine(4, "  §8• §7Mode: §fNormal");
+                    objectiveSign.setLine(5, "  §8• §7Mode: §fNormal");
                 }
-                objectiveSign.setLine(5, "  §8• §7Carte: §9"+ core.world);
-                objectiveSign.setLine(6, "§3");
-                objectiveSign.setLine(7, " §8➡ " + ip);
+                objectiveSign.setLine(6, "  §8• §7Carte: §9"+ core.world);
+                objectiveSign.setLine(7, "§3");
+                objectiveSign.setLine(8, " §8➡ " + ip);
             }
  
         objectiveSign.updateLines();

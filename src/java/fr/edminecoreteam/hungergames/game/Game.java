@@ -1,7 +1,9 @@
 package fr.edminecoreteam.hungergames.game;
 
 import fr.edminecoreteam.hungergames.Core;
+import fr.edminecoreteam.hungergames.end.End;
 import fr.edminecoreteam.hungergames.game.kits.DefaultItem;
+import fr.edminecoreteam.hungergames.game.spec.GameSpec;
 import fr.edminecoreteam.hungergames.game.tasks.NoPVP;
 import fr.edminecoreteam.hungergames.game.tasks.Preparation;
 import fr.edminecoreteam.hungergames.game.tasks.Start;
@@ -59,6 +61,14 @@ public class Game
 
     public void endGame()
     {
-
+        for (Player pls : core.getServer().getOnlinePlayers())
+        {
+            if (core.getSpec().getSpec().contains(pls))
+            {
+                core.getSpec().removeSpec(pls);
+            }
+        }
+        End end = new End();
+        end.end();
     }
 }

@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -24,10 +25,18 @@ public class GameUtils
             (float) core.getConfig().getDouble("maps." + core.world + ".center.y"),
             (float) core.getConfig().getDouble("maps." + core.world + ".center.z"));
 
+    private final Location spec = new Location(Bukkit.getWorld("game"),
+            (float) core.getConfig().getDouble("maps." + core.world + ".spec.x"),
+            (float) core.getConfig().getDouble("maps." + core.world + ".spec.y"),
+            (float) core.getConfig().getDouble("maps." + core.world + ".spec.z"),
+            (float) core.getConfig().getDouble("maps." + core.world + ".spec.f"),
+            (float) core.getConfig().getDouble("maps." + core.world + ".spec.t"));
+
 
 
     public Location getSpawn() { return this.spawn; }
     public Location getCenter() { return this.center; }
+    public Location getSpec() { return this.spec; }
     public Location getPlayerSpawn(String spawn)
     {
         Location loc = new Location(Bukkit.getWorld("game"),
@@ -54,15 +63,17 @@ public class GameUtils
         }
     }
 
-    public static double getPercentage(int currentNumber, int hundredPercentNumber)
+    public void clearAndDropExceptCompasses(Player player)
     {
-        // Vérification pour éviter la division par zéro
-        if (hundredPercentNumber == 0) {
-            throw new IllegalArgumentException("Le nombre représentant 100% ne peut pas être zéro.");
+        for (ItemStack item : player.getInventory().getContents())
+        {
+            if (item != null && item.getType() != Material.AIR && item.getType() != Material.COMPASS)
+            {
+                player.getWorld().dropItem(player.getLocation(), item);
+            }
         }
-
-        // Calcul du pourcentage
-        double percentage = ((double) currentNumber / (double) hundredPercentNumber) * 100;
-        return percentage;
+        player.getInventory().clear();
     }
+
+
 }

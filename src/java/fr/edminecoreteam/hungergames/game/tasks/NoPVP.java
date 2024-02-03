@@ -27,6 +27,15 @@ public class NoPVP extends BukkitRunnable
         for (Player pls : core.getServer().getOnlinePlayers()) { pls.setLevel(timer); }
         core.getBossBar().setTitle("§fPVP actif dans: §c" + timer + "§cs");
         core.getBossBar().setHealth(timer, core.getConfig().getInt("timers.nopvp"));
+
+        if (core.getPlayersInGame().size() == 1)
+        {
+            core.setState(State.FINISH);
+            Game game = new Game();
+            game.endGame();
+            cancel();
+        }
+
         for (Player pls : core.getServer().getOnlinePlayers()) {
             if (timer <= 15 && timer != 5 && timer != 4 && timer != 3 && timer != 2 && timer != 1) {
                 pls.playSound(pls.getLocation(), Sound.NOTE_STICKS, 1.0f, 1.0f);

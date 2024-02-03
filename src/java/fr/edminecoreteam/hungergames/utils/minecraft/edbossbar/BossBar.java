@@ -43,7 +43,7 @@ public class BossBar extends BukkitRunnable
         Wither wither = (Wither) core.getServer().getWorld(p.getWorld().getName()).spawnEntity(toSpawn, EntityType.WITHER);
 
         wither.setCustomName(title);
-        wither.setHealth(health);
+        wither.setHealth(wither.getMaxHealth());
         wither.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));
         wither.setCanPickupItems(false);
         noAI(wither);
@@ -137,13 +137,17 @@ public class BossBar extends BukkitRunnable
         nmsEntity.f(tag);
     }
 
-    public Location getWitherLocation(Location l)  {
-        return l.add(l.getDirection().multiply(-15));
-        //return new Location(l.getWorld(), l.getX(), l.getY() + 15, l.getZ());
+    public void removeAllFromMap()
+    {
+        for (Map.Entry<Player, Wither> en : withers.entrySet())
+        {
+            Wither wither = en.getValue();
+            wither.remove();
+        }
     }
 
     public Location getWitherLocationInit(Location l)  {
-        return l.add(l.getDirection().multiply(15));
+        return l.add(l.getDirection().multiply(10));
     }
 
     @Override
@@ -152,7 +156,9 @@ public class BossBar extends BukkitRunnable
         {
             Player player = en.getKey();
             Wither wither = en.getValue();
-            Location loc = getWitherLocation(player.getLocation());
+            Location loc = getWitherLocationInit(player.getLocation());
+            Location location = new Location(loc.getWorld(), loc.getX(), loc.getY() + 50, loc.getZ());
+
             if (init.contains(player))
             {
                 Location locInit = getWitherLocationInit(player.getLocation());
@@ -160,7 +166,7 @@ public class BossBar extends BukkitRunnable
             }
             else
             {
-                wither.teleport(loc);
+                wither.teleport(location);
             }
             for(Player on : core.getServer().getOnlinePlayers())
             {
@@ -171,5 +177,10 @@ public class BossBar extends BukkitRunnable
                 }
             }
         }
+    }
+
+    public final HashMap<Player, Wither> getWithers()
+    {
+        return this.withers;
     }
 }

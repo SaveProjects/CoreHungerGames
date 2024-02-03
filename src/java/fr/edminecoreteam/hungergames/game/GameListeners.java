@@ -2,15 +2,19 @@ package fr.edminecoreteam.hungergames.game;
 
 import fr.edminecoreteam.hungergames.Core;
 import fr.edminecoreteam.hungergames.State;
+import fr.edminecoreteam.hungergames.game.spec.GameSpec;
 import fr.edminecoreteam.hungergames.utils.game.GameUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -77,13 +81,45 @@ public class GameListeners implements Listener
     }
 
     @EventHandler
-    public void onChestClose(InventoryCloseEvent event) {
+    public void onDeath(PlayerDeathEvent e)
+    {
+        if (core.isState(State.NOPVP) || core.isState(State.INGAME) || core.isState(State.PREPARATION))
+        {
+            if (e.getEntity().getType() == EntityType.PLAYER)
+            {
+                Player victim = (Player) e.getEntity();
+                gameUtils.clearAndDropExceptCompasses(victim);
+                if (victim.getKiller() != null)
+                {
+                    Player attacker = (Player) victim.getKiller();
+                    e.setDeathMessage("§a" + attacker.getName() + " §7a été tué(e) par §c" + victim.getName() + ".");
+                    core.titleBuilder().sendActionBar(attacker, "§6Kill - " + victim.getName());
+                }
+                else if (victim.getKiller() == null)
+                {
+                    e.setDeathMessage("§c" + victim.getName() + " §7est mort(e).");
+                }
+                victim.spigot().respawn();
+                e.getDrops().clear();
+                GameSpec gameSpec = new GameSpec();
+                gameSpec.setSpec(victim);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onChestClose(InventoryCloseEvent event)
+    {
         Inventory inventory = event.getInventory();
-        if (inventory.getHolder() instanceof Chest) {
-            Chest chest = (Chest) inventory.getHolder();
-            Block block = chest.getBlock();
-            gameUtils.dropChestContents(block, inventory);
-            block.setType(Material.AIR);
+        if (inventory.getHolder() instanceof Chest)
+        {
+            if (core.getPlayersInGame().contains(event.getPlayer().getName()))
+            {
+                Chest chest = (Chest) inventory.getHolder();
+                Block block = chest.getBlock();
+                gameUtils.dropChestContents(block, inventory);
+                block.setType(Material.AIR);
+            }
         }
     }
 }
