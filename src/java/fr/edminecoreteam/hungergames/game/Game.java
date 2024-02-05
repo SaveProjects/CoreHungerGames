@@ -2,6 +2,7 @@ package fr.edminecoreteam.hungergames.game;
 
 import fr.edminecoreteam.hungergames.Core;
 import fr.edminecoreteam.hungergames.end.End;
+import fr.edminecoreteam.hungergames.game.eventzones.EventTask;
 import fr.edminecoreteam.hungergames.game.kits.DefaultItem;
 import fr.edminecoreteam.hungergames.game.spec.GameSpec;
 import fr.edminecoreteam.hungergames.game.tasks.NoPVP;
@@ -51,6 +52,9 @@ public class Game
 
         NoPVP task = new NoPVP(core);
         task.runTaskTimer((Plugin) core, 0L, 20L);
+
+        EventTask task2 = new EventTask(core);
+        task2.runTaskTimer((Plugin) core, 0L, 20L);
     }
 
     public void game()

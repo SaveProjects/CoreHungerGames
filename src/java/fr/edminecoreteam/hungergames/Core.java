@@ -3,6 +3,7 @@ package fr.edminecoreteam.hungergames;
 import fr.edminecoreteam.hungergames.game.GameListeners;
 import fr.edminecoreteam.hungergames.game.chests.RandomSpawnChests;
 import fr.edminecoreteam.hungergames.game.chests.RefillChest;
+import fr.edminecoreteam.hungergames.game.eventzones.LoadZones;
 import fr.edminecoreteam.hungergames.game.spec.Spec;
 import fr.edminecoreteam.hungergames.listeners.connection.JoinEvent;
 import fr.edminecoreteam.hungergames.listeners.connection.LeaveEvent;
@@ -42,6 +43,7 @@ public class Core extends JavaPlugin
     private Spec spec;
     public boolean isForceStart = false;
     private SpawnListeners spawnListeners;
+    private LoadZones loadZones;
     private BossBar bossBar;
     private TitleBuilder title;
     private ScoreboardManager scoreboardManager;
@@ -80,6 +82,8 @@ public class Core extends JavaPlugin
         this.title = new TitleBuilder();
         this.bossBar = new BossBar("§8● §6§lHungerGames §8●", 300);
         this.spec = new Spec();
+        this.loadZones = new LoadZones();
+        loadZones.init();
         Bukkit.getPluginManager().registerEvents(new BossBarEvent(), this);
         for (String s : this.getConfig().getConfigurationSection("maps." + this.world + ".spawns").getKeys(false))
         {
@@ -138,6 +142,7 @@ public class Core extends JavaPlugin
     public List<String> getPlayersInGame() { return this.playersInGame; }
     public List<Player> getPlayersToSpawn() { return this.playersToSpawn; }
     public Spec getSpec() { return this.spec; }
+    public LoadZones getLoadZones() { return this.loadZones; }
     public BossBar getBossBar() { return this.bossBar; }
     public TitleBuilder titleBuilder() { return this.title; }
     public int getMaxplayers() { return this.maxplayers; }

@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 public class GameUtils
 {
     private static final Core core = Core.getInstance();
@@ -75,5 +77,36 @@ public class GameUtils
         player.getInventory().clear();
     }
 
+    public void getActionBarZone(Player player)
+    {
+        List<String> zones = core.getLoadZones().getZones();
+
+        for (String zone : core.getConfig().getConfigurationSection("maps." + core.world + ".zones").getKeys(false))
+        {
+            Location locA = new Location(Bukkit.getWorld("game"),
+                    (float) core.getConfig().getDouble("maps." + core.world + ".zones." + zone + ".pos1.x"),
+                    (float) core.getConfig().getDouble("maps." + core.world + ".zones." + zone + ".pos1.y"),
+                    (float) core.getConfig().getDouble("maps." + core.world + ".zones." + zone + ".pos1.z"));
+
+            Location locB = new Location(Bukkit.getWorld("game"),
+                    (float) core.getConfig().getDouble("maps." + core.world + ".zones." + zone + ".pos2.x"),
+                    (float) core.getConfig().getDouble("maps." + core.world + ".zones." + zone + ".pos2.y"),
+                    (float) core.getConfig().getDouble("maps." + core.world + ".zones." + zone + ".pos2.z"));
+
+            if (itsOnAorB(player.getLocation(), locA, locB))
+            {
+                core.titleBuilder().sendActionBar(player, "§fVous ête dans la §cZone: " + zone);
+                return;
+            }
+
+        }
+    }
+
+    public boolean itsOnAorB(Location player, Location A, Location B)
+    {
+        return (player.getX() >= Math.min(A.getX(), B.getX()) && player.getX() <= Math.max(A.getX(), B.getX()) &&
+                player.getY() >= Math.min(A.getY(), B.getY()) && player.getY() <= Math.max(A.getY(), B.getY()) &&
+                player.getZ() >= Math.min(A.getZ(), B.getZ()) && player.getZ() <= Math.max(A.getZ(), B.getZ()));
+    }
 
 }
