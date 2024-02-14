@@ -24,8 +24,8 @@ public class BossBar extends BukkitRunnable
     private String title;
     private double health;
 
-    private final HashMap<Player, Wither> withers = new HashMap<Player, Wither>();
-    private final List<Player> init = new ArrayList<Player>();
+    private final HashMap<Player, Wither> withers = new HashMap<>();
+    private final List<Player> init = new ArrayList<>();
 
     private final static Core core = Core.getInstance();
 
@@ -49,10 +49,12 @@ public class BossBar extends BukkitRunnable
         noAI(wither);
         withers.put(p, wither);
         init.add(p);
-        new BukkitRunnable() {
+        new BukkitRunnable()
+        {
             int t = 0;
             int f = 0;
-            public void run() {
+            public void run()
+            {
 
                 ++t;
                 ++f;
@@ -112,12 +114,11 @@ public class BossBar extends BukkitRunnable
 
     private double getPercentage(int currentNumber, int hundredPercentNumber)
     {
-        // Vérification pour éviter la division par zéro
-        if (hundredPercentNumber == 0) {
+        if (hundredPercentNumber == 0)
+        {
             throw new IllegalArgumentException("Le nombre représentant 100% ne peut pas être zéro.");
         }
 
-        // Calcul du pourcentage
         double percentage = ((double) currentNumber / (double) hundredPercentNumber) * 300;
         return percentage;
     }

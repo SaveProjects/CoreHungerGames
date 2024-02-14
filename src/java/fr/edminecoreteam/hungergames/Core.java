@@ -77,8 +77,8 @@ public class Core extends JavaPlugin
     private void loadListeners()
     {
         this.spawnListeners = new SpawnListeners();
-        this.playersInGame = new ArrayList<String>();
-        this.playersToSpawn = new ArrayList<Player>();
+        this.playersInGame = new ArrayList<>();
+        this.playersToSpawn = new ArrayList<>();
         this.title = new TitleBuilder();
         this.bossBar = new BossBar("§8● §6§lHungerGames §8●", 300);
         this.spec = new Spec();
