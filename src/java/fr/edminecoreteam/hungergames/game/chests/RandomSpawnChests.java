@@ -96,46 +96,6 @@ public class RandomSpawnChests
         list.add(Material.SMOOTH_BRICK);
         list.add(Material.DOUBLE_STONE_SLAB2);
 
-        /*list.add(Material.ACACIA_STAIRS);
-        list.add(Material.BRICK_STAIRS);
-        list.add(Material.SMOOTH_STAIRS);
-        list.add(Material.SANDSTONE_STAIRS);
-        list.add(Material.DARK_OAK_STAIRS);
-        list.add(Material.BIRCH_WOOD_STAIRS);
-        list.add(Material.COBBLESTONE_STAIRS);
-        list.add(Material.SPRUCE_WOOD_STAIRS);
-        list.add(Material.QUARTZ_STAIRS);
-        list.add(Material.WOOD_STAIRS);
-        list.add(Material.FENCE);
-        list.add(Material.WOOD_STEP);
-        list.add(Material.WOOD_DOUBLE_STEP);
-        list.add(Material.STONE_SLAB2);
-        list.add(Material.DOUBLE_STONE_SLAB2);
-        list.add(Material.LEAVES);
-        list.add(Material.LEAVES_2);
-        list.add(Material.WATER);
-        list.add(Material.LAVA);
-        list.add(Material.CHEST);
-        list.add(Material.ENDER_CHEST);
-        list.add(Material.ENCHANTMENT_TABLE);
-        list.add(Material.WORKBENCH);
-        list.add(Material.ENDER_PORTAL_FRAME);
-        list.add(Material.FURNACE);
-        list.add(Material.AIR);
-        list.add(Material.FLOWER_POT);
-        list.add(Material.FLOWER_POT_ITEM);
-        list.add(Material.LADDER);
-        list.add(Material.YELLOW_FLOWER);
-        list.add(Material.RED_ROSE);
-        list.add(Material.LONG_GRASS);
-        list.add(Material.CARPET);
-        list.add(Material.TRAP_DOOR);
-        list.add(Material.IRON_TRAPDOOR);
-        list.add(Material.STAINED_GLASS_PANE);
-        list.add(Material.GLASS);
-        list.add(Material.WATER_LILY);*/
-
-
         return list;
     }
 }
